@@ -1,8 +1,7 @@
 <template>
   <nav class="navbar">
-    <h1>Library Manager</h1>
+    <h1><router-link to="/">Library Manager</router-link></h1>
     <ul>
-      <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/books">Books</router-link></li>
       <li><router-link to="/authors">Authors</router-link></li>
       <li><router-link to="/readers">Readers</router-link></li>
@@ -19,6 +18,8 @@ export default {
 <style scoped>
 .navbar {
   display: flex;
+  align-content: center;
+  align-items: center;
   justify-content: space-between;
   padding: 1rem;
   background: #2c3e50;
@@ -26,6 +27,8 @@ export default {
 }
 .navbar ul {
   display: flex;
+  align-content: center;
+  align-items: center;
   list-style: none;
   gap: 20px;
 }
