@@ -9,11 +9,14 @@ import pl.edu.pwr.ztw.books.model.Reader;
 import pl.edu.pwr.ztw.books.repository.AuthorRepository;
 import pl.edu.pwr.ztw.books.repository.BookRepository;
 import pl.edu.pwr.ztw.books.repository.ReaderRepository;
+import pl.edu.pwr.ztw.books.model.Rental;
+import pl.edu.pwr.ztw.books.repository.RentalRepository;
+import java.time.LocalDate;
 
 @Configuration
 public class DbInitializer {
     @Bean
-    public CommandLineRunner initData(BookRepository bookRepo, AuthorRepository authorRepo, ReaderRepository readerRepo) {
+    public CommandLineRunner initData(BookRepository bookRepo, AuthorRepository authorRepo, ReaderRepository readerRepo, RentalRepository rentalRepo) {
         return args -> {
             //AUTHORS
             Author a1 = new Author();

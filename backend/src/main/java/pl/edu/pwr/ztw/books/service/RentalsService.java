@@ -33,14 +33,16 @@ public class RentalsService implements IRentalsService {
     }
     private RentalDTO mapToDTO(Rental r) {
         RentalDTO dto = new RentalDTO();
+        dto.setId(r.getId());
         dto.setBookId(r.getBook().getId());
         dto.setBookTitle(r.getBook().getTitle());
         dto.setReaderId(r.getReader().getId());
         dto.setReaderFirstName(r.getReader().getFirstName());
         dto.setReaderLastName(r.getReader().getLastName());
+        dto.setReaderEmail(r.getReader().getEmail());
         dto.setRentalDate(r.getRentalDate());
         dto.setReturnDate(r.getReturnDate());
-        dto.setReturned(r.isReturned());
+        dto.setReturned(r.getReturnDate() != null);
         return dto;
     }
 
@@ -69,7 +71,6 @@ public class RentalsService implements IRentalsService {
             rental.setBook(book);
             rental.setReader(reader);
             rental.setRentalDate(dto.getRentalDate());
-            rental.setReturned(dto.isReturned());
             rentalRepository.save(rental);
         }
     }
@@ -85,7 +86,6 @@ public class RentalsService implements IRentalsService {
                 rental.setReader(reader);
                 rental.setRentalDate(dto.getRentalDate());
                 rental.setReturnDate(dto.getReturnDate());
-                rental.setReturned(dto.isReturned());
                 rentalRepository.save(rental);
             }
         });
