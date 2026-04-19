@@ -30,6 +30,11 @@ public class ReadersController {
         return new ResponseEntity<>(readersService.getReader(id), HttpStatus.OK);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getReaderCount() {
+        return new ResponseEntity<>(readersService.getReaders().size(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ReaderDTO> addReader(@RequestBody ReaderDTO reader) {
         readersService.addReader(reader);

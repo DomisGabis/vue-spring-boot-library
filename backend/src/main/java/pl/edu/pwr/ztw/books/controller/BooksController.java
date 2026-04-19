@@ -1,12 +1,19 @@
 package pl.edu.pwr.ztw.books.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pwr.ztw.books.dto.BookDTO;
 import pl.edu.pwr.ztw.books.service.IBooksService;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/books")
@@ -18,14 +25,20 @@ public class BooksController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<BookDTO>> getBooks() {
-        return new ResponseEntity<>(booksService.getBooks(), HttpStatus.OK);
+    public Page<BookDTO> getAllBooks(
+            @PageableDefault(size = 10, sort = "title") Pageable pageable) {
+        return booksService.getBooks(pageable);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBook(@PathVariable Long id) {
         BookDTO book = booksService.getBook(id);
         return book != null ? ResponseEntity.ok(book) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getBookCount() {
+        return new ResponseEntity<>(booksService.getBookCount(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -44,5 +57,12 @@ public class BooksController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         booksService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, String>> handleConflict(ResponseStatusException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", e.getReason());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.edu.pwr.ztw.books.model.Rental;
 
 public interface RentalRepository extends JpaRepository<Rental, Long>  {
+    long count();
+    long countByReturnDateIsNull();
     boolean existsByBookId(Long bookId);
     Rental findByBookId(Long bookId);
+    boolean existsByBookIdAndReturnDateIsNull(Long bookId);
 }

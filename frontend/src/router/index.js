@@ -7,6 +7,9 @@ import BooksView from '../views/BooksView.vue';
 import AuthorsView from '../views/AuthorsView.vue';
 import ReadersView from '../views/ReadersView.vue';
 import RentalsView from '../views/RentalsView.vue';
+import BookDetailsView from '../views/BookDetailsView.vue';
+import BookEditView from '../views/BookEditView.vue';
+import BookAddView from '../views/BookAddView.vue';
 
 const routes = [
     {
@@ -37,6 +40,21 @@ const routes = [
                 path: 'rentals',
                 name: 'Rentals',
                 component: RentalsView
+            },
+            {
+                path: 'books/:id',
+                name: 'BookDetails',
+                component: BookDetailsView
+            },
+            {
+                path: 'books/:id/edit',
+                name: 'BookEdit',
+                component: BookEditView
+            },
+            {
+                path: 'books/add',
+                name: 'BookAdd',
+                component: BookAddView
             }
         ]
     }

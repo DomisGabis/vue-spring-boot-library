@@ -11,4 +11,6 @@ public interface IRentalsService {
     void addRental(RentalDTO rentalDto);
     void updateRental(Long id, RentalDTO rentalDto);
     void deleteRental(Long id);
+    long getTotalCount();
+    long getActiveCount();
 }

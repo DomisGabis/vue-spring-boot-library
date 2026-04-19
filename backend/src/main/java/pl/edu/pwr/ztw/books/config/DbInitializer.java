@@ -34,6 +34,11 @@ public class DbInitializer {
             a3.setLastName("Zapolska");
             authorRepo.save(a3);
 
+            Author a4 = new Author();
+            a4.setFirstName("Grzegorz");
+            a4.setLastName("Błażewicz");
+            authorRepo.save(a4);
+
             //BOOKS
             Book b1 = new Book();
             b1.setTitle("Potop");
@@ -52,6 +57,12 @@ public class DbInitializer {
             b3.setPages(2000);
             b3.setAuthor(a3);
             bookRepo.save(b3);
+
+            Book b4 = new Book();
+            b4.setTitle("Rewolucja z marketing automation. Jak wykorzystać potencjał Big Data");
+            b4.setPages(180);
+            b4.setAuthor(a4);
+            bookRepo.save(b4);
 
             //READERS
             Reader r1 = new Reader();

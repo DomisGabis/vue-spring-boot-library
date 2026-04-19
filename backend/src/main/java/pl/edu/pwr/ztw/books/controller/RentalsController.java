@@ -36,6 +36,16 @@ public class RentalsController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getRentalCount() {
+        return new ResponseEntity<>(rentalsService.getTotalCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/active-count")
+    public ResponseEntity<Long> getActiveRentalCount() {
+        return new ResponseEntity<>(rentalsService.getActiveCount(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> addRental(@RequestBody RentalDTO rentalDto) {
         rentalsService.addRental(rentalDto);

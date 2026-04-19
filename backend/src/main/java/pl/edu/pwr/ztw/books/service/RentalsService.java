@@ -34,12 +34,16 @@ public class RentalsService implements IRentalsService {
     private RentalDTO mapToDTO(Rental r) {
         RentalDTO dto = new RentalDTO();
         dto.setId(r.getId());
-        dto.setBookId(r.getBook().getId());
-        dto.setBookTitle(r.getBook().getTitle());
-        dto.setReaderId(r.getReader().getId());
-        dto.setReaderFirstName(r.getReader().getFirstName());
-        dto.setReaderLastName(r.getReader().getLastName());
-        dto.setReaderEmail(r.getReader().getEmail());
+        if (r.getBook() != null) {
+            dto.setBookId(r.getBook().getId());
+            dto.setBookTitle(r.getBook().getTitle());
+        }
+        if (r.getReader() != null) {
+            dto.setReaderId(r.getReader().getId());
+            dto.setReaderFirstName(r.getReader().getFirstName());
+            dto.setReaderLastName(r.getReader().getLastName());
+            dto.setReaderEmail(r.getReader().getEmail());
+        }
         dto.setRentalDate(r.getRentalDate());
         dto.setReturnDate(r.getReturnDate());
         dto.setReturned(r.getReturnDate() != null);
@@ -94,5 +98,13 @@ public class RentalsService implements IRentalsService {
     @Override
     public void deleteRental(Long id) {
         rentalRepository.deleteById(id);
+    }
+
+    public long getTotalCount() {
+        return rentalRepository.count();
+    }
+
+    public long getActiveCount() {
+        return rentalRepository.countByReturnDateIsNull();
     }
 }

@@ -30,6 +30,11 @@ public class AuthorsController {
         return new ResponseEntity<>(authorsService.getAuthor(id), HttpStatus.OK);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getAuthorCount() {
+        return new ResponseEntity<>(authorsService.getAuthors().size(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO author) {
         authorsService.addAuthor(author);

@@ -1,8 +1,12 @@
 package pl.edu.pwr.ztw.books.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@SQLDelete(sql = "UPDATE book SET is_deleted = true WHERE id=?")
+@SQLRestriction("is_deleted = false")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +16,7 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
     private int pages;
+    private boolean isDeleted;
 
     public Book() {}
 
@@ -20,6 +25,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.pages = pages;
+        this.isDeleted = false;
     }
 
     public Long getId() { return id; }
@@ -30,4 +36,6 @@ public class Book {
     public void setAuthor(Author authorId) { this.author = authorId; }
     public int getPages() { return pages; }
     public void setPages(int pages) { this.pages = pages; }
+    public boolean isDeleted() { return isDeleted; }
+    public void setDeleted(boolean deleted) { isDeleted = deleted; }
 }

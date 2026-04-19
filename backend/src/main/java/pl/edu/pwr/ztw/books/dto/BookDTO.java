@@ -7,6 +7,7 @@ public class BookDTO {
     private String authorFirstName;
     private String authorLastName;
     private int pages;
+    private boolean isRented;
 
     public Long getId() {
         return id;
@@ -43,6 +44,12 @@ public class BookDTO {
     }
     public void setPages(int pages) {
         this.pages = pages;
+    }
+    public boolean isRented() {
+        return isRented;
+    }
+    public void setRented(boolean rented) {
+        isRented = rented;
     }
 }
 

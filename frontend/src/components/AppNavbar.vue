@@ -21,7 +21,9 @@ export default {
   align-content: center;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   background: #2c3e50;
   color: white;
 }
@@ -32,8 +34,30 @@ export default {
   list-style: none;
   gap: 20px;
 }
+
 .navbar a {
   color: white;
   text-decoration: none;
+  position: relative; 
+  padding: 5px 0;
 }
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #36ca88;
+  
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar a:hover::after {
+  transform: scaleX(1);
+}
+
 </style>

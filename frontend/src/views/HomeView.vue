@@ -4,54 +4,91 @@
       <h1>Library Manager</h1>
       <p>Welcome to the library management system!</p>
     </header>
+    <section class="stats">
+      <h2>Statistics</h2>
+      <div v-if="loading">Loading...</div>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="icon">📚</div>
-        <div class="info">
-          <h3>Books</h3>
-          <p class="number">128</p>
+      <div v-else class="stats-grid">
+        <div class="stat-card">
+          <div class="icon">📚</div>
+          <div class="info">
+            <h3>Books</h3>
+            <p class="number">{{ stats.books }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">✍️</div>
+          <div class="info">
+            <h3>Authors</h3>
+            <p class="number">{{ stats.authors }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">👥</div>
+          <div class="info">
+            <h3>Readers</h3>
+            <p class="number">{{ stats.readers }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card rentals">
+          <div class="icon">⏳</div>
+          <div class="info">
+            <h3>Active Rentals</h3>
+            <p class="number">{{ stats.rentals }}</p>
+          </div>
         </div>
       </div>
-
-      <div class="stat-card">
-        <div class="icon">✍️</div>
-        <div class="info">
-          <h3>Authors</h3>
-          <p class="number">45</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="icon">👥</div>
-        <div class="info">
-          <h3>Readers</h3>
-          <p class="number">312</p>
-        </div>
-      </div>
-
-      <div class="stat-card active-rentals">
-        <div class="icon">⏳</div>
-        <div class="info">
-          <h3>Active Rentals</h3>
-          <p class="number">12</p>
-        </div>
-      </div>
-    </div>
-
+    </section>
     <section class="quick-actions">
       <h2>Quick Actions</h2>
       <div class="actions-row">
-        <router-link to="/books" class="action-btn">Add Book</router-link>
-        <router-link to="/rentals" class="action-btn">New Rental</router-link>
+        <AppButton to="/books/add">Add Book</AppButton>
+        <AppButton to="/rentals/add">New Rental</AppButton>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "HomeView"
+  name: "HomeView",
+  data() {
+    return {
+      stats: {
+        books: 0,
+        authors: 0,
+        readers: 0,
+        rentals: 0,
+      },
+      loading: true,
+      error: null,
+    };
+  },
+  async mounted() {
+    try {
+      const [booksRes, authorsRes, readersRes, rentalsRes] = await Promise.all([
+        axios.get("http://localhost:8081/books/count"),
+        axios.get("http://localhost:8081/authors/count"),
+        axios.get("http://localhost:8081/readers/count"),
+        axios.get("http://localhost:8081/rentals/active-count"),
+      ]);
+
+      this.stats.books = booksRes.data;
+      this.stats.authors = authorsRes.data;
+      this.stats.readers = readersRes.data;
+      this.stats.rentals = rentalsRes.data;
+    } catch (err) {
+      this.error = "Failed to fetch statistics";
+      console.error(err);
+    } finally {
+      this.loading = false;
+    }
+  },
 };
 </script>
 
@@ -79,7 +116,7 @@ export default {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   transition: transform 0.2s;
@@ -108,9 +145,8 @@ export default {
   color: #2c3e50;
 }
 
-/* Kolor wyróżniający dla wypożyczeń */
-.active-rentals {
-  border-left: 5px solid #e74c3c;
+.rentals {
+  /* border-left: 5px solid #e74c3c; */
 }
 
 .quick-actions h2 {
@@ -121,19 +157,5 @@ export default {
 .actions-row {
   display: flex;
   gap: 15px;
-}
-
-.action-btn {
-  padding: 12px 24px;
-  background-color: #3498db;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.action-btn:hover {
-  background-color: #2980b9;
 }
 </style>
