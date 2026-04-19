@@ -26,7 +26,7 @@ public class AuthorsController {
 
     @GetMapping
         public Page<AuthorDTO> getAuthors(
-            @PageableDefault(size = 10, sort = "lastName") Pageable pageable) {
+            @PageableDefault(size = 5, sort = "lastName") Pageable pageable) {
         return authorsService.getAuthors(pageable);
     }
 

@@ -74,7 +74,7 @@ export default {
       authors: [],
       loading: true,
       currentPage: 0,
-      pageSize: 10,
+      pageSize: 5,
       totalPages: 0,
       sortBy: "lastName",
       sortDir: "asc",
@@ -84,7 +84,6 @@ export default {
     async fetchAuthors() {
       this.loading = true;
       try {
-        // Endpoint dopasowany do standardu Twojego API
         const response = await axios.get(`http://localhost:8081/authors`, {
           params: {
             page: this.currentPage,
@@ -93,7 +92,6 @@ export default {
           },
         });
 
-        // Spring Page zwraca content, totalPages itp.
         this.authors = response.data.content;
         this.totalPages = response.data.totalPages;
       } catch (error) {
@@ -130,7 +128,6 @@ export default {
 </script>
 
 <style scoped>
-/* Style są identyczne jak w BooksView, aby zachować spójność UI */
 .authors-container { padding: 20px; }
 
 .header {

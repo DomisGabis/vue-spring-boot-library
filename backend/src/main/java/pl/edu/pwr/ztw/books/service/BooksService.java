@@ -11,11 +11,6 @@ import pl.edu.pwr.ztw.books.repository.AuthorRepository;
 import pl.edu.pwr.ztw.books.repository.BookRepository;
 import pl.edu.pwr.ztw.books.repository.RentalRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class BooksService implements IBooksService {
     private final BookRepository bookRepository;
@@ -28,7 +23,7 @@ public class BooksService implements IBooksService {
         this.rentalRepository = rentalRepository;
     }
 
-    private BookDTO convertToDTO(Book book) {
+    private BookDTO mapToDTO(Book book) {
         BookDTO dto = new BookDTO();
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
@@ -47,12 +42,12 @@ public class BooksService implements IBooksService {
 
     @Override
     public Page<BookDTO> getBooks(Pageable pageable) {
-        return bookRepository.findAll(pageable).map(this::convertToDTO);
+        return bookRepository.findAll(pageable).map(this::mapToDTO);
     }
 
     @Override
     public BookDTO getBook(Long id) {
-        return bookRepository.findById(id).map(this::convertToDTO).orElse(null);
+        return bookRepository.findById(id).map(this::mapToDTO).orElse(null);
     }
 
     @Override
@@ -99,6 +94,6 @@ public class BooksService implements IBooksService {
     public Page<BookDTO> getBooksByAuthorId(Long authorId, Pageable pageable) {
         Page<Book> booksPage = bookRepository.findByAuthorId(authorId, pageable);
 
-        return booksPage.map(this::convertToDTO);
+        return booksPage.map(this::mapToDTO);
     }
 }

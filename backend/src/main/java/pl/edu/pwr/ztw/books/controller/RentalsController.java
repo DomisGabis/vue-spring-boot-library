@@ -1,6 +1,9 @@
 package pl.edu.pwr.ztw.books.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +25,10 @@ public class RentalsController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<RentalDTO>> getRentals() {
-        return new ResponseEntity<>(rentalsService.getRentals(), HttpStatus.OK);
+    public ResponseEntity<Page<RentalDTO>> getRentals(
+            @RequestParam(required = false) Boolean active,
+            @PageableDefault(size = 5, sort = "rentedDate") Pageable pageable) {
+        return new ResponseEntity<>(rentalsService.getRentals(active, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

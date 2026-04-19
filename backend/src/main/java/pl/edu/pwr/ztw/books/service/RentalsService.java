@@ -1,6 +1,8 @@
 package pl.edu.pwr.ztw.books.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pwr.ztw.books.dto.RentalDTO;
 import pl.edu.pwr.ztw.books.model.Book;
@@ -51,10 +53,9 @@ public class RentalsService implements IRentalsService {
     }
 
     @Override
-    public Collection<RentalDTO> getRentals() {
-        return rentalRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<RentalDTO> getRentals(boolean activeOnly, Pageable pageable) {
+        return activeOnly ? rentalRepository.findByReturnDateIsNull(pageable).map(this::mapToDTO)
+                : rentalRepository.findAll(pageable).map(this::mapToDTO);
     }
 
     @Override

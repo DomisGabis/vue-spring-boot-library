@@ -1,11 +1,15 @@
 package pl.edu.pwr.ztw.books.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import tools.jackson.databind.util.Converter;
 
 import java.time.LocalDate;
 
 @Entity
+@SQLDelete(sql = "UPDATE rental SET is_deleted = true WHERE id=?")
+@SQLRestriction("is_deleted = false")
 public class Rental {
 
     @Id
@@ -19,6 +23,7 @@ public class Rental {
     private Reader reader;
     private LocalDate rentalDate;
     private LocalDate returnDate;
+    private boolean isDeleted;
 
     public Rental() {}
 
@@ -27,6 +32,7 @@ public class Rental {
         this.book = book;
         this.reader = reader;
         this.rentalDate = rentalDate;
+        this.isDeleted = false;
     }
 
     public Long getId() { return id; }
@@ -42,4 +48,12 @@ public class Rental {
     public void setRentalDate(LocalDate rentalDate) { this.rentalDate = rentalDate; }
     public LocalDate getReturnDate() { return returnDate; }
     public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 }

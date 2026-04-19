@@ -78,7 +78,7 @@ export default {
       books: [],
       loading: true,
       currentPage: 0,
-      pageSize: 10,
+      pageSize: 5,
       totalPages: 0,
       sortBy: "title",
       sortDir: "asc",

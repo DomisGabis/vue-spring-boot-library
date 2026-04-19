@@ -13,6 +13,7 @@ import BookAddView from '../views/books/BookAddView.vue';
 import AuthorDetailsView from '../views/authors/AuthorDetailsView.vue';
 import AuthorEditView from '../views/authors/AuthorEditView.vue';
 import AuthorAddView from '../views/authors/AuthorAddView.vue';
+import RentalAddView from '../views/rentals/RentalAddView.vue';
 
 const routes = [
     {
@@ -73,6 +74,11 @@ const routes = [
                 path: 'authors/add',
                 name: 'AuthorAdd',
                 component: AuthorAddView
+            },
+            {
+                path: 'rentals/add',
+                name: 'RentalAdd',
+                component: RentalAddView
             }
         ]
     }

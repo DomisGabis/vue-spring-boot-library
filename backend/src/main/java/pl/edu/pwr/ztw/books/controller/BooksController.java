@@ -25,7 +25,7 @@ public class BooksController {
 
     @GetMapping
     public Page<BookDTO> getBooks(
-            @PageableDefault(size = 10, sort = "title") Pageable pageable) {
+            @PageableDefault(size = 5, sort = "title") Pageable pageable) {
         return booksService.getBooks(pageable);
     }
 
