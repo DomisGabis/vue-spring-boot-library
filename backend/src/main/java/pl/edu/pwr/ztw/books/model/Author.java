@@ -4,8 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@SQLDelete(sql = "UPDATE author SET is_deleted = true WHERE id=?")
+@SQLRestriction("is_deleted = false")
 public class Author {
 
     @Id
@@ -13,6 +17,7 @@ public class Author {
     private Long id;
     private String firstName;
     private String lastName;
+    private boolean isDeleted;
 
     public Author() {}
 
@@ -20,6 +25,7 @@ public class Author {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isDeleted = false;
     }
 
     public Long getId() { return id; }
@@ -28,4 +34,6 @@ public class Author {
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
+    public boolean isDeleted() { return isDeleted; }
+    public void setDeleted(boolean deleted) { isDeleted = deleted; }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="details-container">
-    <AppButton theme="outline" :to="'/books'">Back to list</AppButton>
+    <AppButton theme="outline" @click="$router.go(-1)">Back</AppButton>
 
     <div v-if="loading" class="loader">Loading book data...</div>
 

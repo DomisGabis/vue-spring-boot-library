@@ -94,4 +94,11 @@ public class BooksService implements IBooksService {
     public long getBookCount() {
         return bookRepository.count();
     }
+
+    @Override
+    public Page<BookDTO> getBooksByAuthorId(Long authorId, Pageable pageable) {
+        Page<Book> booksPage = bookRepository.findByAuthorId(authorId, pageable);
+
+        return booksPage.map(this::convertToDTO);
+    }
 }

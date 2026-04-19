@@ -13,4 +13,6 @@ public interface IBooksService {
     void updateBook(Long id, BookDTO bookDto);
     void deleteBook(Long id);
     long getBookCount();
+
+    Page<BookDTO> getBooksByAuthorId(Long authorId, Pageable pageable);
 }

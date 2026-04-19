@@ -1,5 +1,7 @@
 package pl.edu.pwr.ztw.books.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pwr.ztw.books.dto.AuthorDTO;
 import pl.edu.pwr.ztw.books.model.Author;
@@ -19,11 +21,12 @@ public class AuthorsService implements IAuthorsService {
         dto.setId(a.getId());
         dto.setFirstName(a.getFirstName());
         dto.setLastName(a.getLastName());
+        dto.setBookCount(authorRepository.countBooksByAuthorId(a.getId()));
         return dto;
     }
     @Override
-    public Collection<AuthorDTO> getAuthors() {
-        return authorRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    public Page<AuthorDTO> getAuthors(Pageable pageable) {
+        return authorRepository.findAll(pageable).map(this::mapToDTO);
     }
 
     @Override
@@ -49,4 +52,9 @@ public class AuthorsService implements IAuthorsService {
 
     @Override
     public void deleteAuthor(Long id) { authorRepository.deleteById(id); }
+
+    @Override
+    public long getAuthorCount() {
+        return authorRepository.count();
+    }
 }

@@ -36,11 +36,11 @@
             </td>
 
             <td class="actions">
-              <AppButton theme="none"  class="edit-icon" :to="`/books/${book.id}/edit`"> ✏️ </AppButton>
+              <AppButton theme="none" class="edit-icon" :to="`/books/${book.id}/edit`"> ✏️ </AppButton>
               <button
                 @click.stop="deleteBook(book.id)"
                 class="delete-icon"
-                title="Usuń"
+                title="Delete"
               >
                 🗑️
               </button>

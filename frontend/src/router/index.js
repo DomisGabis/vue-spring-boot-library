@@ -3,13 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '../layouts/MainLayout.vue';
 
 import HomeView from '../views/HomeView.vue';
-import BooksView from '../views/BooksView.vue';
-import AuthorsView from '../views/AuthorsView.vue';
-import ReadersView from '../views/ReadersView.vue';
-import RentalsView from '../views/RentalsView.vue';
-import BookDetailsView from '../views/BookDetailsView.vue';
-import BookEditView from '../views/BookEditView.vue';
-import BookAddView from '../views/BookAddView.vue';
+import BooksView from '../views/books/BooksView.vue';
+import AuthorsView from '../views/authors/AuthorsView.vue';
+import ReadersView from '../views/readers/ReadersView.vue';
+import RentalsView from '../views/rentals/RentalsView.vue';
+import BookDetailsView from '../views/books/BookDetailsView.vue';
+import BookEditView from '../views/books/BookEditView.vue';
+import BookAddView from '../views/books/BookAddView.vue';
+import AuthorDetailsView from '../views/authors/AuthorDetailsView.vue';
+import AuthorEditView from '../views/authors/AuthorEditView.vue';
+import AuthorAddView from '../views/authors/AuthorAddView.vue';
 
 const routes = [
     {
@@ -55,6 +58,21 @@ const routes = [
                 path: 'books/add',
                 name: 'BookAdd',
                 component: BookAddView
+            },
+            {
+                path: 'authors/:id',
+                name: 'AuthorDetails',
+                component: AuthorDetailsView
+            },
+            {
+                path: 'authors/:id/edit',
+                name: 'AuthorEdit',
+                component: AuthorEditView
+            },
+            {
+                path: 'authors/add',
+                name: 'AuthorAdd',
+                component: AuthorAddView
             }
         ]
     }

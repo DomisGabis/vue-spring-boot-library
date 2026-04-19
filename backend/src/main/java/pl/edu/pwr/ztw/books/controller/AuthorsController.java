@@ -1,10 +1,14 @@
 package pl.edu.pwr.ztw.books.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwr.ztw.books.dto.AuthorDTO;
+import pl.edu.pwr.ztw.books.dto.BookDTO;
 import pl.edu.pwr.ztw.books.service.IAuthorsService;
 
 import java.util.Collection;
@@ -21,8 +25,9 @@ public class AuthorsController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<AuthorDTO>> getAuthors() {
-        return new ResponseEntity<>(authorsService.getAuthors(), HttpStatus.OK);
+        public Page<AuthorDTO> getAuthors(
+            @PageableDefault(size = 10, sort = "lastName") Pageable pageable) {
+        return authorsService.getAuthors(pageable);
     }
 
     @GetMapping("/{id}")
@@ -31,8 +36,8 @@ public class AuthorsController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Integer> getAuthorCount() {
-        return new ResponseEntity<>(authorsService.getAuthors().size(), HttpStatus.OK);
+    public ResponseEntity<Long> getAuthorCount() {
+        return new ResponseEntity<>(authorsService.getAuthorCount(), HttpStatus.OK);
     }
 
     @PostMapping

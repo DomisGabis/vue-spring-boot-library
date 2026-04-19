@@ -1,6 +1,5 @@
 package pl.edu.pwr.ztw.books.controller;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -11,8 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pwr.ztw.books.dto.BookDTO;
 import pl.edu.pwr.ztw.books.service.IBooksService;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,7 +24,7 @@ public class BooksController {
     }
 
     @GetMapping
-    public Page<BookDTO> getAllBooks(
+    public Page<BookDTO> getBooks(
             @PageableDefault(size = 10, sort = "title") Pageable pageable) {
         return booksService.getBooks(pageable);
     }
@@ -64,5 +63,11 @@ public class BooksController {
         Map<String, String> response = new HashMap<>();
         response.put("message", e.getReason());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<Page<BookDTO>> getBooksByAuthor(@PathVariable Long authorId, @PageableDefault(size = 10, sort = "title") Pageable pageable) {
+        Page<BookDTO> books = booksService.getBooksByAuthorId(authorId, pageable);
+        return ResponseEntity.ok(books);
     }
 }
