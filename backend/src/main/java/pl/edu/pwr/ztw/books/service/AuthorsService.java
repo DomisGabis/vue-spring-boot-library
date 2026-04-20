@@ -34,11 +34,12 @@ public class AuthorsService implements IAuthorsService {
         return authorRepository.findById(id).map(this::mapToDTO).orElse(null);
     }
     @Override
-    public void addAuthor(AuthorDTO dto) {
+    public AuthorDTO addAuthor(AuthorDTO dto) {
         Author author = new Author();
         author.setFirstName(dto.getFirstName());
         author.setLastName(dto.getLastName());
         authorRepository.save(author);
+        return mapToDTO(author);
     }
 
     @Override

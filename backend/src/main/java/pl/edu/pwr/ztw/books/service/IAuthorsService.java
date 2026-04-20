@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface IAuthorsService {
     Page<AuthorDTO> getAuthors(Pageable pageable);
     AuthorDTO getAuthor(Long id);
-    void addAuthor(AuthorDTO authorDto);
+    AuthorDTO addAuthor(AuthorDTO authorDto);
     void updateAuthor(Long id, AuthorDTO authorDto);
     void deleteAuthor(Long id);
     long getAuthorCount();

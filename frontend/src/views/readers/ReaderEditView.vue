@@ -37,11 +37,13 @@ export default {
       }
     },
     async handleUpdate(updatedData) {
+      if (updatedData instanceof Event) {
+        return;
+      }
       try {
         const id = this.$route.params.id;
         await axios.put(`http://localhost:8081/readers/${id}`, updatedData);
-        alert("Reader updated successfully!");
-        this.$router.push("/readers");
+        this.$router.go(-1);
       } catch (error) {
         alert("Error updating reader");
       }

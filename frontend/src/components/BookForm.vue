@@ -66,11 +66,7 @@
       </div>
 
       <div class="actions">
-        <AppButton
-          type="submit"
-          theme="primary"
-          :disabled="!localBook.authorId"
-        >
+        <AppButton type="submit" theme="primary" :disabled="!localBook.title">
           {{ submitLabel }}
         </AppButton>
       </div>
@@ -122,7 +118,7 @@ export default {
   data() {
     return {
       localBook: { ...this.initialData },
-      authors: [],
+      authors: { content: [] },
       searchQuery: "",
       showDropdown: false,
       selectedAuthorName: "",
@@ -216,7 +212,12 @@ export default {
       }
     },
     handleSubmit() {
-      this.$emit("submit", this.localBook);
+      const payload = {
+        title: this.localBook.title,
+        pages: this.localBook.pages,
+        authorId: this.localBook.authorId,
+      };
+      this.$emit("submit", payload);
     },
     handleClickOutside(e) {
       if (!this.$el.contains(e.target)) {

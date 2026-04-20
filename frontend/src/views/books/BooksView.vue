@@ -25,8 +25,11 @@
             <td @click="goToDetails(book.id)" class="clickable">
               {{ book.title }}
             </td>
-            <td @click="goToDetails(book.id)" class="clickable">
+            <td v-if="book.authorId" @click="goToDetails(book.id)" class="clickable">
               {{ book.authorFirstName }} {{ book.authorLastName }}
+            </td>
+            <td v-else @click="goToDetails(book.id)" class="clickable">
+              -
             </td>
             <td @click="goToDetails(book.id)" class="clickable">
               {{ book.pages }}

@@ -16,9 +16,10 @@
       <div class="book-content">
         <div class="info-group">
           <label>Author</label>
-          <router-link class="author-link" :to="`/authors/${book.authorId}`">
+          <router-link v-if="book.authorId" class="author-link" :to="`/authors/${book.authorId}`">
             {{ book.authorFirstName }} {{ book.authorLastName }}
           </router-link>
+          <p v-else class="no-author">-</p>
         </div>
 
         <div class="info-group">
@@ -93,7 +94,7 @@ export default {
     async markAsReturned() {
       if (confirm("Mark this book as returned?")) {
         try {
-          const response = await axios.get(`http://localhost:8081/rentals`, {
+          const response = await axios.get(`http://localhost:8081/rentals?size=1000`, {
             params: {
               active: true,
             },
@@ -101,6 +102,7 @@ export default {
           const rentalToUpdate = response.data.content.find(
             (rental) => rental.bookId === this.book.id
           );
+          console.log("Rental to update:", rentalToUpdate);
           const updatedData = {
             ...rentalToUpdate,
             returnDate: new Date().toISOString(),

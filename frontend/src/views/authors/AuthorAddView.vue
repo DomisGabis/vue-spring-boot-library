@@ -14,6 +14,9 @@ export default {
   components: { AuthorForm },
   methods: {
     async handleAdd(authorData) {
+      if (authorData instanceof Event) {
+        return;
+      }
       try {
         await axios.post('http://localhost:8081/authors', authorData);
         this.$router.go(-1);

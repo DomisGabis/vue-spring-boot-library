@@ -35,10 +35,8 @@ export default {
   async mounted() {
     const bookId = this.$route.params.id;
     try {
-      // Pobieramy dane książki, aby przekazać je do formularza
       const response = await axios.get(`http://localhost:8081/books/${bookId}`);
       
-      // Mapujemy dane z API na strukturę oczekiwaną przez BookForm
       this.book = {
         title: response.data.title,
         authorId: response.data.authorId,
@@ -46,8 +44,8 @@ export default {
       };
       this.originalTitle = response.data.title;
     } catch (error) {
-      console.error("Błąd podczas pobierania danych:", error);
-      alert("Nie udało się załadować danych książki.");
+      console.error("Error occurred while loading book data:", error);
+      alert("Error occurred while loading book data.");
       this.$router.push('/books');
     } finally {
       this.loading = false;
@@ -55,14 +53,16 @@ export default {
   },
   methods: {
     async handleUpdate(updatedBookData) {
+      if (updatedBookData instanceof Event) {
+        return;
+      }
       const bookId = this.$route.params.id;
       try {
         await axios.put(`http://localhost:8081/books/${bookId}`, updatedBookData);
-        alert("Zmiany zostały pomyślnie zapisane!");
         this.$router.go(-1);
       } catch (error) {
-        console.error("Błąd podczas aktualizacji:", error);
-        alert("Wystąpił błąd podczas zapisywania zmian.");
+        console.error("Error occurred while updating the book:", error);
+        alert("Error occurred while updating the book.");
       }
     }
   }

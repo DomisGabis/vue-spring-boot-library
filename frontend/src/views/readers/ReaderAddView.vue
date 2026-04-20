@@ -17,10 +17,12 @@ export default {
   components: { ReaderForm },
   methods: {
     async handleCreate(readerData) {
+      if (readerData instanceof Event) {
+        return;
+      }
       try {
         await axios.post("http://localhost:8081/readers", readerData);
-        alert("Reader added successfully!");
-        this.$router.push("/readers");
+        this.$router.go(-1);
       } catch (error) {
         alert("Error adding reader: " + (error.response?.data?.message || "Server error"));
       }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pwr.ztw.books.dto.BookDTO;
+import pl.edu.pwr.ztw.books.model.Author;
 import pl.edu.pwr.ztw.books.model.Book;
 import pl.edu.pwr.ztw.books.repository.AuthorRepository;
 import pl.edu.pwr.ztw.books.repository.BookRepository;
@@ -55,7 +56,13 @@ public class BooksService implements IBooksService {
         Book book = new Book();
         book.setTitle(dto.getTitle());
         book.setPages(dto.getPages());
-        authorRepository.findById(dto.getAuthorId()).ifPresent(book::setAuthor);
+        if (dto.getAuthorId() != null) {
+            Author author = authorRepository.findById(dto.getAuthorId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
+            book.setAuthor(author);
+        } else {
+            book.setAuthor(null);
+        }
         bookRepository.save(book);
     }
 
@@ -64,7 +71,13 @@ public class BooksService implements IBooksService {
         bookRepository.findById(id).ifPresent(book -> {
             book.setTitle(dto.getTitle());
             book.setPages(dto.getPages());
-            authorRepository.findById(dto.getAuthorId()).ifPresent(book::setAuthor);
+            if (dto.getAuthorId() != null) {
+                Author author = authorRepository.findById(dto.getAuthorId())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
+                book.setAuthor(author);
+            } else {
+                book.setAuthor(null);
+            }
             bookRepository.save(book);
         });
     }

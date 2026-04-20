@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @SQLDelete(sql = "UPDATE book SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted = false")
@@ -16,6 +19,8 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
     private int pages;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rental> rentals = new ArrayList<>();
     private boolean isDeleted;
 
     public Book() {}

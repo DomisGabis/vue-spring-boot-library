@@ -1,11 +1,11 @@
 package pl.edu.pwr.ztw.books.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SQLDelete(sql = "UPDATE reader SET is_deleted = true WHERE id=?")
@@ -18,6 +18,8 @@ public class Reader {
     private String firstName;
     private String lastName;
     private String email;
+    @OneToMany(mappedBy = "reader", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rental> rentals = new ArrayList<>();
     private boolean isDeleted;
 
     public Reader() {}

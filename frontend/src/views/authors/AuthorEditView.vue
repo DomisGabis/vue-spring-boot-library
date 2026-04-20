@@ -45,6 +45,10 @@ export default {
   },
   methods: {
     async handleUpdate(updatedData) {
+      if (updatedData instanceof Event) {
+        return;
+      }
+
       const authorId = this.$route.params.id;
       try {
         await axios.put(`http://localhost:8081/authors/${authorId}`, updatedData);

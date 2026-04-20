@@ -188,7 +188,6 @@ export default {
 </script>
 
 <style scoped>
-/* Importujemy Twoje bazowe style */
 .rentals-container {
   padding: 20px;
 }
@@ -200,7 +199,6 @@ export default {
   margin-bottom: 1rem;
 }
 
-/* Style dla zakładek filtrów */
 .filter-tabs {
   display: flex;
   gap: 10px;
@@ -221,8 +219,8 @@ export default {
 }
 
 .tab-btn.active {
-  background-color: #f0f4f8;
-  color: #3498db;
+  background-color: #f0f8f3;
+  color: #42b983;
 }
 
 .add-btn {
