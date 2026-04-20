@@ -16,7 +16,7 @@ export default {
     async handleAdd(bookData) {
       try {
         await axios.post('http://localhost:8081/books', bookData);
-        this.$router.push('/books');
+        this.$router.go(-1);
       } catch (e) { alert("Error occurred while adding the book."); }
     }
   }

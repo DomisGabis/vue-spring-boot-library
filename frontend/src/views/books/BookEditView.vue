@@ -59,7 +59,7 @@ export default {
       try {
         await axios.put(`http://localhost:8081/books/${bookId}`, updatedBookData);
         alert("Zmiany zostały pomyślnie zapisane!");
-        this.$router.push(`/books/${bookId}`);
+        this.$router.go(-1);
       } catch (error) {
         console.error("Błąd podczas aktualizacji:", error);
         alert("Wystąpił błąd podczas zapisywania zmian.");

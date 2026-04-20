@@ -1,12 +1,11 @@
 <template>
   <div class="form-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Back</AppButton>
+    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Cancel</AppButton>
     
-    <div class="form-card">
       <div class="form-header">
-        <span class="icon">🔍</span>
         <h2>Add Rental</h2>
       </div>
+    <div class="form-card">
 
       <div v-if="loadingData" class="loader">Loading lists...</div>
 
@@ -150,7 +149,7 @@ export default {
           readerId: this.selectedUser.id,
           rentalDate: new Date(this.rentalDate).toISOString()
         });
-        this.$router.push("/rentals");
+        this.$router.go(-1);
       } catch (e) {
         alert("Error saving.");
       } finally {

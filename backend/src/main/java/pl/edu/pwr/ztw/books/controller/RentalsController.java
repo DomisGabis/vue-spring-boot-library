@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pwr.ztw.books.dto.BookDTO;
 import pl.edu.pwr.ztw.books.dto.RentalDTO;
 import pl.edu.pwr.ztw.books.model.Rental;
 import pl.edu.pwr.ztw.books.service.IRentalsService;
@@ -27,7 +28,7 @@ public class RentalsController {
     @GetMapping
     public ResponseEntity<Page<RentalDTO>> getRentals(
             @RequestParam(required = false) Boolean active,
-            @PageableDefault(size = 5, sort = "rentedDate") Pageable pageable) {
+            @PageableDefault(size = 5, sort = "rentalDate") Pageable pageable) {
         return new ResponseEntity<>(rentalsService.getRentals(active, pageable), HttpStatus.OK);
     }
 
@@ -73,5 +74,11 @@ public class RentalsController {
         }
         rentalsService.deleteRental(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/reader/{readerId}")
+    public ResponseEntity<Page<RentalDTO>> getRentalsByReader(@PathVariable Long readerId, @PageableDefault(size = 10, sort = "rentalDate") Pageable pageable) {
+        Page<RentalDTO> books = rentalsService.getRentalsByReaderId(readerId, pageable);
+        return ResponseEntity.ok(books);
     }
 }

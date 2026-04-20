@@ -12,92 +12,94 @@ import pl.edu.pwr.ztw.books.repository.ReaderRepository;
 import pl.edu.pwr.ztw.books.model.Rental;
 import pl.edu.pwr.ztw.books.repository.RentalRepository;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Configuration
 public class DbInitializer {
     @Bean
     public CommandLineRunner initData(BookRepository bookRepo, AuthorRepository authorRepo, ReaderRepository readerRepo, RentalRepository rentalRepo) {
         return args -> {
-            //AUTHORS
-            Author a1 = new Author();
-            a1.setFirstName("Henryk");
-            a1.setLastName("Sienkiewicz");
-            authorRepo.save(a1);
+            Random random = new Random();
+            List<Author> authors = new ArrayList<>();
+            String[][] authorData = {
+                    {"Henryk", "Sienkiewicz"}, {"Adam", "Mickiewicz"}, {"Gabriela", "Zapolska"},
+                    {"Stephen", "King"}, {"J.K.", "Rowling"}, {"George R.R.", "Martin"},
+                    {"Agatha", "Christie"}, {"Haruki", "Murakami"}
+            };
 
-            Author a2 = new Author();
-            a2.setFirstName("Adam");
-            a2.setLastName("Mickiewicz");
-            authorRepo.save(a2);
+            for (String[] data : authorData) {
+                Author a = new Author();
+                a.setFirstName(data[0]);
+                a.setLastName(data[1]);
+                authors.add(authorRepo.save(a));
+            }
 
-            Author a3 = new Author();
-            a3.setFirstName("Gabriela");
-            a3.setLastName("Zapolska");
-            authorRepo.save(a3);
+            List<Book> books = new ArrayList<>();
+            String[][] bookData = {
+                    {"Potop", "936", "0"}, {"Moralność Pani Dulskiej", "100", "2"},
+                    {"Heated Rivalry", "2000", "2"}, {"The Shining", "447", "3"},
+                    {"It", "1138", "3"}, {"Harry Potter and the Sorcerer's Stone", "309", "4"},
+                    {"Harry Potter and the Chamber of Secrets", "341", "4"}, {"A Game of Thrones", "694", "5"},
+                    {"A Clash of Kings", "768", "5"}, {"Murder on the Orient Express", "256", "6"},
+                    {"Death on the Nile", "288", "6"}, {"Norwegian Wood", "296", "7"},
+                    {"Kafka on the Shore", "505", "7"}, {"The Great Gatsby", "180", "1"}
+            };
 
-            Author a4 = new Author();
-            a4.setFirstName("Grzegorz");
-            a4.setLastName("Błażewicz");
-            authorRepo.save(a4);
+            for (String[] data : bookData) {
+                Book b = new Book();
+                b.setTitle(data[0]);
+                b.setPages(Integer.parseInt(data[1]));
+                b.setAuthor(authors.get(Integer.parseInt(data[2])));
+                books.add(bookRepo.save(b));
+            }
 
-            //BOOKS
-            Book b1 = new Book();
-            b1.setTitle("Potop");
-            b1.setPages(936);
-            b1.setAuthor(a1);
-            bookRepo.save(b1);
+            List<Reader> readers = new ArrayList<>();
+            String[] firstNames = {"Jan", "Anna", "Piotr", "Maria", "Krzysztof", "Katarzyna", "Marek", "Magdalena"};
+            String[] lastNames = {"Kowal", "Nowak", "Bik", "Wójcik", "Zielewicz", "Szymczyk", "Lemańczyk"};
 
-            Book b2 = new Book();
-            b2.setTitle("Moralność Pani Dulskiej");
-            b2.setPages(100);
-            b2.setAuthor(a3);
-            bookRepo.save(b2);
+            for (int i = 1; i <= 20; i++) {
+                Reader r = new Reader();
+                r.setFirstName(firstNames[random.nextInt(firstNames.length)]);
+                r.setLastName(lastNames[random.nextInt(lastNames.length)]);
+                r.setEmail("user" + i + "@example.com");
+                readers.add(readerRepo.save(r));
+            }
 
-            Book b3 = new Book();
-            b3.setTitle("Heated Rivalry");
-            b3.setPages(2000);
-            b3.setAuthor(a3);
-            bookRepo.save(b3);
+            // 4. WYPOŻYCZENIA (Zhardkodowane i bezpieczne)
+            List<Rental> rentals = new ArrayList<>();
 
-            Book b4 = new Book();
-            b4.setTitle("Rewolucja z marketing automation. Jak wykorzystać potencjał Big Data");
-            b4.setPages(180);
-            b4.setAuthor(a4);
-            bookRepo.save(b4);
-
-            //READERS
-            Reader r1 = new Reader();
-            r1.setFirstName("Jan");
-            r1.setLastName("Kowalski");
-            r1.setEmail("jan@wp.pl");
-            readerRepo.save(r1);
-
-            Reader r2 = new Reader();
-            r2.setFirstName("Inga");
-            r2.setLastName("Grabska");
-            r2.setEmail("inga_g@gmail.com");
-            readerRepo.save(r2);
-
-            //RENTALS
             Rental rent1 = new Rental();
-            rent1.setBook(b1);
-            rent1.setReader(r1);
+            rent1.setBook(books.get(0));
+            rent1.setReader(readers.get(0));
             rent1.setRentalDate(LocalDate.now().minusDays(10));
             rent1.setReturnDate(null);
             rentalRepo.save(rent1);
 
             Rental rent2 = new Rental();
-            rent2.setBook(b2);
-            rent2.setReader(r2);
+            rent2.setBook(books.get(1));
+            rent2.setReader(readers.get(1));
             rent2.setRentalDate(LocalDate.now().minusDays(20));
             rent2.setReturnDate(LocalDate.now().minusDays(5));
             rentalRepo.save(rent2);
 
             Rental rent3 = new Rental();
-            rent3.setBook(b3);
-            rent3.setReader(r1);
+            rent3.setBook(books.get(2));
+            rent3.setReader(readers.get(2));
             rent3.setRentalDate(LocalDate.now().minusDays(2));
             rent3.setReturnDate(null);
             rentalRepo.save(rent3);
+
+            for (int i = 3; i < 13; i++) {
+                Rental historyRent = new Rental();
+                historyRent.setBook(books.get(i));
+                historyRent.setReader(readers.get(i % readers.size()));
+                historyRent.setRentalDate(LocalDate.now().minusMonths(2).plusDays(i));
+                if(random.nextBoolean())historyRent.setReturnDate(LocalDate.now().minusMonths(1).plusDays(i));
+                rentalRepo.save(historyRent);
+            }
+
             
             //System.out.println("Baza danych została zainicjalizowana!");
         };

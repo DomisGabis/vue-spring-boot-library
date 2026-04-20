@@ -108,4 +108,9 @@ public class RentalsService implements IRentalsService {
     public long getActiveCount() {
         return rentalRepository.countByReturnDateIsNull();
     }
+
+    public Page<RentalDTO> getRentalsByReaderId(long readerId, Pageable pageable) {
+        Page<Rental> rentalsPage = rentalRepository.findByReaderId(readerId, pageable);
+        return rentalsPage.map(this::mapToDTO);
+    }
 }

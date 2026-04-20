@@ -48,7 +48,7 @@ export default {
       const authorId = this.$route.params.id;
       try {
         await axios.put(`http://localhost:8081/authors/${authorId}`, updatedData);
-        this.$router.push('/authors');
+        this.$router.go(-1);
       } catch (e) {
         alert("Error occurred while updating author data.");
       }

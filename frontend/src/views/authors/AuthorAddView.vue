@@ -16,7 +16,7 @@ export default {
     async handleAdd(authorData) {
       try {
         await axios.post('http://localhost:8081/authors', authorData);
-        this.$router.push('/authors');
+        this.$router.go(-1);
       } catch (e) {
         alert("Error occurred while adding the author.");
       }

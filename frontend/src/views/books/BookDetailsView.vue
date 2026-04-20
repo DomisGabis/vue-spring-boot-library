@@ -35,7 +35,15 @@
       </div>
 
       <div class="book-actions">
-        <AppButton theme="primary" :to="`/books/${book.id}/edit`">Edit data</AppButton>
+        <AppButton
+          v-if="book.rented === true"
+          theme="primary"
+          @click="markAsReturned"
+          >Mark as Returned</AppButton
+        >
+        <AppButton theme="primary" :to="`/books/${book.id}/edit`"
+          >Edit data</AppButton
+        >
         <AppButton theme="danger" @click="deleteBook">Delete Book</AppButton>
       </div>
     </div>
@@ -55,18 +63,20 @@ export default {
       loading: true,
     };
   },
-  async mounted() {
-    const bookId = this.$route.params.id;
-    try {
-      const response = await axios.get(`http://localhost:8081/books/${bookId}`);
-      this.book = response.data;
-    } catch (error) {
-      console.error("Error fetching book details:", error);
-    } finally {
-      this.loading = false;
-    }
-  },
   methods: {
+    async fetchData() {
+      const bookId = this.$route.params.id;
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/books/${bookId}`
+        );
+        this.book = response.data;
+      } catch (error) {
+        console.error("Error fetching book details:", error);
+      } finally {
+        this.loading = false;
+      }
+    },
     async deleteBook() {
       if (confirm("Are you sure you want to delete this book?")) {
         try {
@@ -74,13 +84,40 @@ export default {
           this.$router.push("/books");
         } catch (error) {
           const message =
-            error.response?.data?.message ||
-            "Error while deleting book";
+            error.response?.data?.message || "Error while deleting book";
           console.error("Error details:", error.response);
           alert(message);
         }
       }
     },
+    async markAsReturned() {
+      if (confirm("Mark this book as returned?")) {
+        try {
+          const response = await axios.get(`http://localhost:8081/rentals`, {
+            params: {
+              active: true,
+            },
+          });
+          const rentalToUpdate = response.data.content.find(
+            (rental) => rental.bookId === this.book.id
+          );
+          const updatedData = {
+            ...rentalToUpdate,
+            returnDate: new Date().toISOString(),
+          };
+          await axios.put(
+            `http://localhost:8081/rentals/${rentalToUpdate.id}`,
+            updatedData
+          );
+          this.fetchData();
+        } catch (error) {
+          alert("Error during return process");
+        }
+      }
+    },
+  },
+  mounted() {
+    this.fetchData();
   },
 };
 </script>

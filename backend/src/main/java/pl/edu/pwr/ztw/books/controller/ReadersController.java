@@ -1,6 +1,9 @@
 package pl.edu.pwr.ztw.books.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,9 @@ public class ReadersController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<ReaderDTO>> getReaders() {
-        return new ResponseEntity<>(readersService.getReaders(), HttpStatus.OK);
+    public ResponseEntity<Page<ReaderDTO>> getReaders(
+            @PageableDefault(size = 5, sort = "lastName") Pageable pageable) {
+        return new ResponseEntity<>(readersService.getReaders(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -31,8 +35,8 @@ public class ReadersController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Integer> getReaderCount() {
-        return new ResponseEntity<>(readersService.getReaders().size(), HttpStatus.OK);
+    public ResponseEntity<Long> getReaderCount() {
+        return new ResponseEntity<>(readersService.getCount(), HttpStatus.OK);
     }
 
     @PostMapping

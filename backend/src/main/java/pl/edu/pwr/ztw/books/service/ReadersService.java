@@ -1,5 +1,7 @@
 package pl.edu.pwr.ztw.books.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.edu.pwr.ztw.books.dto.ReaderDTO;
 import pl.edu.pwr.ztw.books.model.Reader;
@@ -28,10 +30,8 @@ public class ReadersService implements IReadersService {
     }
 
     @Override
-    public Collection<ReaderDTO> getReaders() {
-        return readerRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<ReaderDTO> getReaders(Pageable pageable) {
+        return readerRepository.findAll(pageable).map(this::mapToDTO);
     }
 
     @Override
@@ -64,5 +64,10 @@ public class ReadersService implements IReadersService {
     @Override
     public void deleteReader(Long id) {
         readerRepository.deleteById(id);
+    }
+
+    @Override
+    public long getCount() {
+        return readerRepository.count();
     }
 }

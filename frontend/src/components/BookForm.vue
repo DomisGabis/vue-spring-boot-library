@@ -159,14 +159,18 @@ export default {
   methods: {
     async fetchAuthors() {
       try {
-        const res = await axios.get("http://localhost:8081/authors");
+        const res = await axios.get("http://localhost:8081/authors", {
+          params: { page: 0, size: 1000 },
+        });
         this.authors = res.data;
       } catch (e) {
         console.error("Error fetching authors");
       }
     },
     updateSelectedAuthorName() {
-      const author = this.authors.content.find((a) => a.id === this.localBook.authorId);
+      const author = this.authors.content.find(
+        (a) => a.id === this.localBook.authorId
+      );
       this.selectedAuthorName = author
         ? `${author.firstName} ${author.lastName}`
         : "";
@@ -194,11 +198,21 @@ export default {
           "http://localhost:8081/authors",
           this.newAuthor
         );
-        this.authors.content.push(res.data);
-        this.selectAuthor(res.data);
+
+        const savedAuthor = res.data;
+
+        this.authors.content = [...this.authors.content, savedAuthor];
+
+        this.selectAuthor(savedAuthor);
+
         this.showQuickAdd = false;
+        this.newAuthor = { firstName: "", lastName: "" };
       } catch (e) {
-        alert("Error adding author");
+        console.error(e);
+        alert(
+          "Error adding author: " +
+            (e.response?.data?.message || "Unknown error")
+        );
       }
     },
     handleSubmit() {

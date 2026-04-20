@@ -15,4 +15,5 @@ public interface IRentalsService {
     void deleteRental(Long id);
     long getTotalCount();
     long getActiveCount();
+    Page<RentalDTO> getRentalsByReaderId(long readerId, Pageable pageable);
 }

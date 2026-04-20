@@ -14,6 +14,9 @@ import AuthorDetailsView from '../views/authors/AuthorDetailsView.vue';
 import AuthorEditView from '../views/authors/AuthorEditView.vue';
 import AuthorAddView from '../views/authors/AuthorAddView.vue';
 import RentalAddView from '../views/rentals/RentalAddView.vue';
+import ReaderDetailsView from '../views/readers/ReaderDetailsView.vue';
+import ReaderEditView from '../views/readers/ReaderEditView.vue';
+import ReaderAddView from '../views/readers/ReaderAddView.vue';
 
 const routes = [
     {
@@ -79,6 +82,21 @@ const routes = [
                 path: 'rentals/add',
                 name: 'RentalAdd',
                 component: RentalAddView
+            },
+            {
+                path: 'readers/:id',
+                name: 'ReaderDetails',
+                component: ReaderDetailsView
+            },
+            {
+                path: 'readers/:id/edit',
+                name: 'ReaderEdit',
+                component: ReaderEditView
+            },
+            {
+                path: 'readers/add',
+                name: 'ReaderAdd',
+                component: ReaderAddView
             }
         ]
     }
