@@ -46,7 +46,8 @@ export default {
   content: '';
   position: absolute;
   width: 100%;
-  height: 2px;
+  height: 1.5px;
+  border-radius: 10px; 
   bottom: 0;
   left: 0;
   background-color: #36ca88;
@@ -54,6 +55,10 @@ export default {
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease-in-out;
+
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .navbar a:hover::after {
