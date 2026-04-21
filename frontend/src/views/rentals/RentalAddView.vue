@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Cancel</AppButton>
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button>
     
       <div class="form-header">
         <h2>Add Rental</h2>
@@ -67,13 +67,13 @@
         </div>
 
         <div class="actions">
-          <AppButton 
+          <app-button 
             type="submit" 
             theme="primary" 
             :disabled="!selectedBook || !selectedUser || submitting"
           >
-            {{ submitting ? "Saving..." : "Confirm" }}
-          </AppButton>
+            {{ submitting ? "Saving..." : "Add rental" }}
+          </app-button>
         </div>
       </form>
     </div>
@@ -82,8 +82,10 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
+  components: { AppButton },
   data() {
     return {
       allBooks: [],
@@ -207,6 +209,5 @@ export default {
 label { font-weight: 600; margin-bottom: 8px; color: #7f8c8d; }
 input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
 
-.mb-4 { margin-bottom: 20px; }
 .actions { display: flex; justify-content: flex-end; margin-top: 20px; }
 </style>

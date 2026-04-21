@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <h2>Edit Reader Profile</h2>
-    <ReaderForm 
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button>
+    <h2 class="view-title">Edit Reader</h2>
+    <reader-form 
       v-if="reader" 
       :initial-data="reader" 
       submit-label="Update Reader" 
@@ -14,9 +15,10 @@
 <script>
 import axios from "axios";
 import ReaderForm from "@/components/ReaderForm.vue";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
-  components: { ReaderForm },
+  components: { ReaderForm, AppButton },
   data() {
     return {
       reader: null,

@@ -2,9 +2,7 @@
   <div class="readers-container">
     <div class="header">
       <h1>Readers List</h1>
-      <router-link to="/readers/add" class="add-btn">
-        <span class="icon">+</span> Add New Reader
-      </router-link>
+      <app-button theme="primary" :to="'/readers/add'">Add New Reader</app-button>
     </div>
 
     <div v-if="loading" class="loader">Loading readers...</div>
@@ -32,14 +30,8 @@
             </td>
 
             <td class="actions">
-              <AppButton theme="none" class="edit-icon" :to="`/readers/${reader.id}/edit`"> ✏️ </AppButton>
-              <button
-                @click.stop="deleteReader(reader.id)"
-                class="delete-icon"
-                title="Delete"
-              >
-                🗑️
-              </button>
+              <app-button theme="none" class="edit-icon" :to="`/readers/${reader.id}/edit`"> ✏️ </app-button>
+              <app-button theme="none" @click.stop="deleteReader(reader.id)" > 🗑️ </app-button>
             </td>
           </tr>
         </tbody>
@@ -66,9 +58,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "ReadersView",
+  components: { AppButton },
   data() {
     return {
       readers: [],
@@ -84,7 +78,6 @@ export default {
     async fetchReaders() {
       this.loading = true;
       try {
-        // Zmieniony endpoint na /readers zgodnie z Twoim API
         const response = await axios.get(`http://localhost:8081/readers`, {
           params: {
             page: this.currentPage,
@@ -138,18 +131,6 @@ export default {
   margin-bottom: 2rem;
 }
 
-.add-btn {
-  background-color: #42b983;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.add-btn:hover { background-color: #38a169; }
-
 .readers-table {
   width: 100%;
   border-collapse: collapse;
@@ -197,11 +178,9 @@ td {
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 1.2rem;
   transition: transform 0.2s;
 }
 
-.actions button:hover { transform: scale(1.2); }
 
 .pagination {
   margin-top: 20px;

@@ -1,7 +1,6 @@
 <template>
   <div class="edit-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Cancel</AppButton>
-    
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button>
     <div v-if="loading" class="loader">
       <p>Loading book data...</p>
     </div>
@@ -9,7 +8,7 @@
     <div v-else>
       <h2 class="view-title">Edit Book: {{ originalTitle }}</h2>
       
-      <BookForm 
+      <book-form 
         :initialData="book" 
         submitLabel="Save Changes" 
         @submit="handleUpdate" 
@@ -21,10 +20,11 @@
 <script>
 import axios from 'axios';
 import BookForm from '@/components/BookForm.vue';
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: 'BookEditView',
-  components: { BookForm },
+  components: { BookForm, AppButton },
   data() {
     return {
       book: null,
@@ -90,9 +90,5 @@ export default {
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.mb-4 {
-  margin-bottom: 20px;
 }
 </style>

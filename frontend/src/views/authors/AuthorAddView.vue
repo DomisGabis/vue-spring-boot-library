@@ -1,17 +1,19 @@
 <template>
   <div class="container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Cancel</AppButton>
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button>
     <h2 class="view-title">Add New Author</h2>
-    <AuthorForm submitLabel="Add Author" @submit="handleAdd" />
+    <author-form submitLabel="Add Author" @submit="handleAdd" />
   </div>
 </template>
 
 <script>
 import AuthorForm from '@/components/AuthorForm.vue';
+import AppButton from '@/components/AppButton.vue';
 import axios from 'axios';
 
 export default {
-  components: { AuthorForm },
+  name: "AuthorAddView",
+  components: { AuthorForm, AppButton },
   methods: {
     async handleAdd(authorData) {
       if (authorData instanceof Event) {
@@ -31,5 +33,4 @@ export default {
 <style scoped>
 .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
 .view-title { margin-bottom: 20px; color: #2c3e50; }
-.mb-4 { margin-bottom: 20px; }
 </style>

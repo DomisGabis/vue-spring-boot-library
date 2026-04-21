@@ -1,19 +1,19 @@
 <template>
   <div class="add-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4"
-      >Cancel</AppButton
-    >
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button >
     <h2 class="view-title">Add Book</h2>
-    <BookForm submitLabel="Add New Book" @submit="handleAdd" />
+    <book-form submitLabel="Add New Book" @submit="handleAdd" />
   </div>
 </template>
 
 <script>
 import BookForm from "@/components/BookForm.vue";
+import AppButton from "@/components/AppButton.vue";
 import axios from "axios";
 
 export default {
-  components: { BookForm },
+  name: "BookAddView",
+  components: { BookForm, AppButton },
   methods: {
     async handleAdd(bookData) {
       if (bookData instanceof Event) {
@@ -35,8 +35,5 @@ export default {
   max-width: 600px;
   margin: 40px auto;
   padding: 0 20px;
-}
-.mb-4 {
-  margin-bottom: 20px;
 }
 </style>

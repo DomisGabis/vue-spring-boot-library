@@ -1,7 +1,7 @@
 <template>
   <div class="details-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4"
-      >Back</AppButton
+    <app-button theme="outline" @click="$router.go(-1)"
+      >Back</app-button
     >
 
     <div v-if="loading" class="loader">Loading reader data...</div>
@@ -28,11 +28,11 @@
         </div>
 
         <div class="reader-actions">
-          <AppButton theme="primary" :to="`/readers/${reader.id}/edit`"
-            >Edit data</AppButton
+          <app-button theme="primary" :to="`/readers/${reader.id}/edit`"
+            >Edit data</app-button
           >
-          <AppButton theme="danger" @click="deleteReader"
-            >Delete Reader</AppButton
+          <app-button theme="danger" @click="deleteReader"
+            >Delete Reader</app-button
           >
         </div>
       </div>
@@ -105,9 +105,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "ReaderDetailsView",
+  components: { AppButton },
   data() {
     return {
       reader: null,
@@ -314,8 +316,5 @@ export default {
 .no-data {
   color: #95a5a6;
   font-style: italic;
-}
-.mb-4 {
-  margin-bottom: 20px;
 }
 </style>

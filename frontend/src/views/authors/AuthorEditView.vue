@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Cancel</AppButton>
+    <app-button theme="outline" @click="$router.go(-1)">Cancel</app-button>
     
     <div v-if="loading">Loading author data...</div>
     <div v-else>
       <h2 class="view-title">Edit Author: {{ originalName }}</h2>
-      <AuthorForm 
+      <author-form 
         :initialData="author" 
         submitLabel="Save Changes" 
         @submit="handleUpdate" 
@@ -16,10 +16,13 @@
 
 <script>
 import AuthorForm from '@/components/AuthorForm.vue';
+import AppButton from '@/components/AppButton.vue';
+
 import axios from 'axios';
 
 export default {
-  components: { AuthorForm },
+  name: "AuthorEditView",
+  components: { AuthorForm, AppButton },
   data() {
     return {
       author: null,
@@ -64,5 +67,4 @@ export default {
 <style scoped>
 .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
 .view-title { margin-bottom: 20px; color: #2c3e50; }
-.mb-4 { margin-bottom: 20px; }
 </style>

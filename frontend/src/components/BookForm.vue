@@ -66,9 +66,9 @@
       </div>
 
       <div class="actions">
-        <AppButton type="submit" theme="primary" :disabled="!localBook.title">
+        <app-button type="submit" theme="primary" :disabled="!localBook.title">
           {{ submitLabel }}
-        </AppButton>
+        </app-button>
       </div>
     </form>
 
@@ -88,11 +88,11 @@
           <input v-model="newAuthor.lastName" placeholder="Last Name" />
         </div>
         <div class="modal-actions">
-          <AppButton type="button" theme="outline" @click="showQuickAdd = false"
-            >Cancel</AppButton
+          <app-button type="button" theme="outline" @click="showQuickAdd = false"
+            >Cancel</app-button
           >
-          <AppButton type="button" theme="primary" @click="addNewAuthor"
-            >Save and Select</AppButton
+          <app-button type="button" theme="primary" @click="addNewAuthor"
+            >Save and Select</app-button
           >
         </div>
       </div>
@@ -102,9 +102,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from './AppButton.vue';
 
 export default {
-  name: "BookForm",
+  name: "book-form",
+  components: { AppButton },
   props: {
     initialData: {
       type: Object,

@@ -2,9 +2,7 @@
   <div class="authors-container">
     <div class="header">
       <h1>Authors List</h1>
-      <router-link to="/authors/add" class="add-btn">
-        <span class="icon">+</span> Add New Author
-      </router-link>
+      <app-button theme="primary" :to="'/authors/add'">Add New Author</app-button>
     </div>
 
     <div v-if="loading" class="loader">Loading authors...</div>
@@ -32,14 +30,8 @@
             </td>
 
             <td class="actions">
-              <AppButton theme="none" class="edit-icon" :to="`/authors/${author.id}/edit`"> ✏️ </AppButton>
-              <button
-                @click.stop="deleteAuthor(author.id)"
-                class="delete-icon"
-                title="Delete"
-              >
-                🗑️
-              </button>
+              <app-button theme="none" :to="`/authors/${author.id}/edit`"> ✏️ </app-button>
+              <app-button theme="none" @click.stop="deleteAuthor(author.id)" > 🗑️ </app-button>
             </td>
           </tr>
         </tbody>
@@ -66,9 +58,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: "AuthorsView",
+  components: { AppButton },
   data() {
     return {
       authors: [],
@@ -137,18 +131,6 @@ export default {
   margin-bottom: 2rem;
 }
 
-.add-btn {
-  background-color: #42b983;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.add-btn:hover { background-color: #38a169; }
-
 .authors-table {
   width: 100%;
   border-collapse: collapse;
@@ -170,7 +152,6 @@ th {
   font-size: 0.85rem;
 }
 
-/* Dopasowanie szerokości kolumn */
 .col-name { width: 40%; }
 .col-books { width: 10%; }
 .col-actions { width: 10%; }
@@ -198,11 +179,9 @@ td {
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 1.2rem;
   transition: transform 0.2s;
 }
 
-.actions button:hover { transform: scale(1.2); }
 
 .pagination {
   margin-top: 20px;

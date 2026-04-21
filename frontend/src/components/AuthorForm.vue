@@ -12,15 +12,18 @@
       </div>
 
       <div class="actions">
-        <AppButton type="submit" theme="primary">{{ submitLabel }}</AppButton>
+        <app-button type="submit" theme="primary">{{ submitLabel }}</app-button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import AppButton from './AppButton.vue';
+
 export default {
-  name: 'AuthorForm',
+  name: 'author-form',
+  components: { AppButton },
   props: {
     initialData: {
       type: Object,

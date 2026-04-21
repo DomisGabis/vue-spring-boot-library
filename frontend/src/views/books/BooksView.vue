@@ -2,9 +2,7 @@
   <div class="books-container">
     <div class="header">
       <h1>Book List</h1>
-      <router-link to="/books/add" class="add-btn">
-        <span class="icon">+</span> Add New Book
-      </router-link>
+      <app-button theme="primary" :to="'/books/add'">Add New Book</app-button>
     </div>
 
     <div v-if="loading" class="loader">Loading books...</div>
@@ -39,14 +37,8 @@
             </td>
 
             <td class="actions">
-              <AppButton theme="none" class="edit-icon" :to="`/books/${book.id}/edit`"> ✏️ </AppButton>
-              <button
-                @click.stop="deleteBook(book.id)"
-                class="delete-icon"
-                title="Delete"
-              >
-                🗑️
-              </button>
+              <app-button theme="none" :to="`/books/${book.id}/edit`"> ✏️ </app-button>
+              <app-button theme="none" @click.stop="deleteBook(book.id)" > 🗑️ </app-button>
             </td>
           </tr>
         </tbody>
@@ -73,9 +65,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: "BooksView",
+  components: { AppButton },
   data() {
     return {
       books: [],
@@ -235,12 +229,7 @@ td {
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 1.2rem;
   transition: transform 0.2s;
-}
-
-.actions button:hover {
-  transform: scale(1.2);
 }
 
 .pagination {

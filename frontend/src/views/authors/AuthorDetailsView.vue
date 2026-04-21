@@ -1,6 +1,6 @@
 <template>
   <div class="details-container">
-    <AppButton theme="outline" @click="$router.go(-1)" class="mb-4">Back</AppButton>
+    <app-button theme="outline" @click="$router.go(-1)" class="mb-4">Back</app-button>
 
     <div v-if="loading" class="loader">Loading author data...</div>
 
@@ -26,8 +26,8 @@
         </div>
 
         <div class="author-actions">
-          <AppButton theme="primary" :to="`/authors/${author.id}/edit`">Edit data</AppButton>
-          <AppButton theme="danger" @click="deleteAuthor">Delete Author</AppButton>
+          <app-button theme="primary" :to="`/authors/${author.id}/edit`">Edit data</app-button>
+          <app-button theme="danger" @click="deleteAuthor">Delete Author</app-button>
         </div>
       </div>
 
@@ -74,9 +74,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: "AuthorDetailsView",
+  components: { AppButton },
   data() {
     return {
       author: null,

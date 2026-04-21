@@ -1,6 +1,6 @@
 <template>
   <div class="details-container">
-    <AppButton theme="outline" @click="$router.go(-1)">Back</AppButton>
+    <app-button theme="outline" @click="$router.go(-1)">Back</app-button>
 
     <div v-if="loading" class="loader">Loading book data...</div>
 
@@ -36,16 +36,16 @@
       </div>
 
       <div class="book-actions">
-        <AppButton
+        <app-button
           v-if="book.rented === true"
           theme="primary"
           @click="markAsReturned"
-          >Mark as Returned</AppButton
+          >Mark as Returned</app-button
         >
-        <AppButton theme="primary" :to="`/books/${book.id}/edit`"
-          >Edit data</AppButton
+        <app-button theme="primary" :to="`/books/${book.id}/edit`"
+          >Edit data</app-button
         >
-        <AppButton theme="danger" @click="deleteBook">Delete Book</AppButton>
+        <app-button theme="danger" @click="deleteBook">Delete Book</app-button>
       </div>
     </div>
 
@@ -55,9 +55,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "BookDetailsView",
+  components: { AppButton },
   data() {
     return {
       book: null,

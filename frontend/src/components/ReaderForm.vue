@@ -32,17 +32,19 @@
       </div>
 
       <div class="actions">
-        <AppButton type="submit" theme="primary">
+        <app-button type="submit" theme="primary">
           {{ submitLabel }}
-        </AppButton>
+        </app-button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import AppButton from './AppButton.vue';
 export default {
-  name: 'ReaderForm',
+  name: 'reader-form',
+  components: { AppButton },
   props: {
     initialData: {
       type: Object,

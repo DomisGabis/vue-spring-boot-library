@@ -2,9 +2,7 @@
   <div class="rentals-container">
     <div class="header">
       <h1>Rentals List</h1>
-      <router-link to="/rentals/add" class="add-btn">
-        <span class="icon">+</span> New Rental
-      </router-link>
+      <app-button theme="primary" :to="'/rentals/add'">Add New Rental</app-button>
     </div>
 
     <div class="filter-tabs">
@@ -65,21 +63,8 @@
             </td>
 
             <td class="actions">
-              <button
-                @click.stop="deleteRental(rental.id)"
-                class="delete-icon"
-                title="Delete Record"
-              >
-                🗑️
-              </button>
-              <button
-                v-if="rental.returned === false"
-                @click="returnBook(rental.id)"
-                class="action-btn return-btn"
-                title="Return Book"
-              >
-                ↩️
-              </button>
+              <app-button theme="none" @click.stop="deleteRental(rental.id)" > 🗑️ </app-button>
+              <app-button v-if="rental.returned === false" theme="none" @click="returnBook(rental.id)" > ↩️ </app-button>
             </td>
           </tr>
         </tbody>
@@ -106,9 +91,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "RentalsView",
+  components: { AppButton },
   data() {
     return {
       rentals: [],
@@ -223,15 +210,6 @@ export default {
   color: #42b983;
 }
 
-.add-btn {
-  background-color: #42b983;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
 /* Tabela */
 .rentals-table {
   width: 100%;
@@ -294,23 +272,17 @@ th {
   transition: opacity 0.2s;
 }
 
+.actions button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
 .rental-row:hover .actions {
   opacity: 1;
 }
 
-.action-btn {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-.delete-icon {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
 
 /* Paginacja */
 .pagination {

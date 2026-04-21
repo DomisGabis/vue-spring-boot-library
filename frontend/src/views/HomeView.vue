@@ -45,8 +45,8 @@
     <section class="quick-actions">
       <h2>Quick Actions</h2>
       <div class="actions-row">
-        <AppButton to="/books/add">New Book</AppButton>
-        <AppButton to="/rentals/add">New Rental</AppButton>
+        <app-button to="/books/add">New Book</app-button>
+        <app-button to="/rentals/add">New Rental</app-button>
       </div>
     </section>
   </div>
@@ -54,9 +54,11 @@
 
 <script>
 import axios from "axios";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "HomeView",
+  components: { AppButton },
   data() {
     return {
       stats: {

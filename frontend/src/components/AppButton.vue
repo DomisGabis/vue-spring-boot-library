@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'AppButton',
+  name: 'app-button',
   inheritAttrs: false,
   props: {
     theme: { type: String, default: 'primary' },
